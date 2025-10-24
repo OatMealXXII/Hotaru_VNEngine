@@ -1,6 +1,7 @@
 # Hotaru - Visual Novel Engine for Godot 4.x
 
-A Visual Novel Engine plugin for Godot 4.x, written entirely in GDScript. Hotaru provides core visual novel functionality with seamless Godot integration.
+A Visual Novel Engine plugin for Godot 4.x, written entirely in GDScript. Hotaru provides core visual novel functionality with seamless Godot integration. <br />
+**Buy me a coffee:** [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y8XXS4N)
 
 ## 🚀 Current Features
 
@@ -277,3 +278,4 @@ For questions, bug reports, or feature requests, please open an issue on the pro
 ---
 
 **Hotaru Visual Novel Engine** - A modern Visual Novel Engine for Godot with core features and seamless integration.
+**Buy me a coffee:** [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y8XXS4N)
