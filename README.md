@@ -236,7 +236,7 @@ Create audio buses in your project:
 
 Translation files should be placed in `res://addons/gn_vn/localization/`:
 - `en.json` - English translations
-- `ja.json` - Japanese translations
+- `th.json` - Thai translations
 - etc.
 
 ## 🚀 Performance Tips
