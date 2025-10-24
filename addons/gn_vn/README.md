@@ -1,32 +1,38 @@
 # GN_VN - Visual Novel Engine for Godot 4.x
 
-A complete Visual Novel Engine plugin for Godot 4.x, written entirely in GDScript. GN_VN is designed to outperform and fix every major limitation of Ren'Py while providing seamless integration with Godot's editor and node system.
+A Visual Novel Engine plugin for Godot 4.x, written entirely in GDScript. GN_VN provides core visual novel functionality with seamless Godot integration.
 
-## 🚀 Features
+## 🚀 Current Features
 
-### Core Systems
-- **Dialogue System**: Rich text formatting, per-character display, BBCode support, ruby/furigana
-- **Choice & Branching**: Interactive choice system with return values and conditional branches
-- **Deterministic Saves**: JSON-based save system with schema versioning (no more pickle files!)
-- **Rollback System**: Frame-accurate rollback with state diffs and quicksave/quickload
-- **Scene Integration**: Works natively with Godot nodes (Sprite2D, AnimatedSprite2D, etc.)
-- **Transitions & Animations**: Crossfade, shader-based, and timeline-based transitions
-- **Audio System**: Mixer groups, voice playback with text synchronization
-- **Localization**: CSV/JSON import/export with runtime language switching
-- **Editor Plugin**: Visual story editor dock inside Godot with live preview
-- **Accessibility**: Adjustable font size, text speed, high-contrast mode
-- **Mobile Support**: Touch input and mobile-optimized performance
+### Core Systems (Implemented)
+- **Dialogue System**: Rich text formatting, character names, typing animation
+- **Choice System**: Interactive choice selection with branching
+- **Save/Load System**: JSON-based save system with multiple slots
+- **Rollback System**: Frame-accurate rollback with state management
+- **Settings Panel**: Text speed, auto-advance, and volume controls
+- **Localization**: Basic translation system with JSON support
+- **Audio System**: Voice, music, and sound effect management
+- **Story Execution**: Node-based story execution with variables
 
-### Ren'Py Improvements
-- ✅ **Portable Saves**: JSON format instead of insecure pickle files
-- ✅ **Editor Integration**: Full Godot Editor Plugin with visual story editing
-- ✅ **Mobile Optimization**: Efficient GDScript with object pooling
-- ✅ **3D Engine Integration**: Fully node-based, Godot-native
-- ✅ **Deterministic Rollback**: Frame-accurate with state diffs
-- ✅ **Better Localization**: Proper CSV/JSON pipeline with runtime switching
-- ✅ **Testability**: Included unit test scenes
-- ✅ **Performance**: GPU batching & shader text effects
-- ✅ **Extensibility**: Plugin API with signals, callbacks, and event hooks
+### Story Node Types (Implemented)
+- **Dialogue Nodes**: Character dialogue with text formatting
+- **Choice Nodes**: Player choice selection
+- **Variable Nodes**: Set story variables
+- **Conditional Nodes**: Branch based on variable conditions
+- **Jump Nodes**: Navigate to other story nodes
+- **Call/Return Nodes**: Subroutine-like story sections
+
+### Text Formatting (Implemented)
+- **Bold text**: `**bold**` → `[b]bold[/b]`
+- **Italic text**: `*italic*` → `[i]italic[/i]`
+- **Colored text**: `{color=red}text{/color}` → `[color=red]text[/color]`
+- **Ruby/Furigana**: `[ruby=漢字]kanji[/ruby]` → Small text above base text
+
+### Editor Integration (Basic)
+- **Story Editor Dock**: Basic story editing interface
+- **Node Tree**: View story structure
+- **Node Editor**: Edit individual story nodes
+- **Import/Export**: JSON story format support
 
 ## 📦 Installation
 
@@ -39,13 +45,10 @@ A complete Visual Novel Engine plugin for Godot 4.x, written entirely in GDScrip
 ### Basic Usage
 
 ```gdscript
-# Create a VNManager instance
-var vn_manager = preload("res://addons/gn_vn/engine/vn_manager.gd").new()
-get_tree().get_root().add_child(vn_manager)
-
+# VNManager is automatically available as a singleton
 # Load and start a story
 var story_resource = load("res://addons/gn_vn/samples/demo.story.json")
-vn_manager.start_story(story_resource, "start")
+VisualNovelManager.start_story(story_resource, "start")
 ```
 
 ### Creating a Story
@@ -81,9 +84,7 @@ story.story_data = {
 
 ## 📖 Story JSON Schema
 
-### Node Types
-
-#### Dialogue Node
+### Dialogue Node
 ```json
 {
     "id": "node_id",
@@ -94,7 +95,7 @@ story.story_data = {
 }
 ```
 
-#### Choice Node
+### Choice Node
 ```json
 {
     "id": "node_id",
@@ -109,7 +110,7 @@ story.story_data = {
 }
 ```
 
-#### Variable Node
+### Variable Node
 ```json
 {
     "id": "node_id",
@@ -120,7 +121,7 @@ story.story_data = {
 }
 ```
 
-#### Conditional Node
+### Conditional Node
 ```json
 {
     "id": "node_id",
@@ -131,37 +132,11 @@ story.story_data = {
 }
 ```
 
-### Text Formatting
-
-GN_VN supports rich text formatting:
-
-- **Bold text**: `**bold**` → `[b]bold[/b]`
-- *Italic text*: `*italic*` → `[i]italic[/i]`
-- Colored text: `{color=red}text{/color}` → `[color=red]text[/color]`
-- Ruby/Furigana: `[ruby=漢字]kanji[/ruby]` → Small text above base text
-
-### Variable System
-
-Variables can be used in expressions:
-
-```json
-{
-    "type": "set_variable",
-    "variable": "player_name",
-    "value": "Alice"
-}
-```
-
-Expressions support:
-- Variable references: `$player_name`
-- Comparisons: `$score >= 100`
-- String comparisons: `$name == "Alice"`
-
 ## 🎯 API Reference
 
-### VNManager
+### VNManager (Singleton)
 
-The main singleton class that manages story execution.
+The main class that manages story execution.
 
 ```gdscript
 # Story control
@@ -171,7 +146,7 @@ func present_choices(choices: Array) -> int
 
 # Save/Load system
 func save(slot: int = 0) -> bool
-func load(slot: int = 0) -> bool
+func load_game(slot: int = 0) -> bool
 func quicksave() -> void
 func quickload() -> void
 
@@ -215,16 +190,19 @@ Handles save/load operations with JSON format.
 func save_to_slot(slot: int, save_data: Dictionary) -> bool
 func load_from_slot(slot: int) -> Dictionary
 func get_save_info(slot: int) -> Dictionary
+func delete_slot(slot: int) -> bool
+func get_all_saves() -> Array
 func export_save(slot: int, export_path: String) -> bool
 func import_save(import_path: String, slot: int) -> bool
 ```
 
 ## 🧪 Testing
 
-The plugin includes comprehensive test scenes:
+The plugin includes test scenes:
 
 - `tests/test_save_scene.tscn` - Tests save/load functionality
 - `tests/test_dialogue_scene.tscn` - Tests dialogue and choice systems
+- `tests/test_comprehensive.tscn` - Comprehensive feature testing
 
 Run these scenes to verify the engine is working correctly.
 
@@ -235,8 +213,7 @@ The GN_VN Editor Plugin provides:
 - **Story Editor Dock**: Visual interface for editing stories
 - **Node Tree**: Hierarchical view of story nodes
 - **Node Editor**: Property editor for selected nodes
-- **Preview System**: Test stories directly in the editor
-- **Import/Export**: CSV and JSON format support
+- **Import/Export**: JSON format support
 
 ### Using the Editor
 
@@ -244,11 +221,11 @@ The GN_VN Editor Plugin provides:
 2. Click "New" to create a story
 3. Add nodes using the tree view
 4. Edit node properties in the node editor
-5. Use "Preview" to test your story
+5. Save your story as JSON
 
 ## 🔧 Configuration
 
-### Audio Bus Setup
+### Audio Setup
 
 Create audio buses in your project:
 - `Voice` - For character voice clips
@@ -259,16 +236,15 @@ Create audio buses in your project:
 
 Translation files should be placed in `res://addons/gn_vn/localization/`:
 - `en.json` - English translations
-- `ja.json` - Japanese translations
+- `th.json` - Thai translations
 - etc.
 
 ## 🚀 Performance Tips
 
 - Use object pooling for frequently created UI elements
-- Enable GPU batching for text rendering
-- Use shader-based transitions for smooth animations
-- Optimize audio files for mobile platforms
+- Optimize audio files for your target platform
 - Use compressed textures for character sprites
+- Test on target devices for performance validation
 
 ## 🤝 Contributing
 
@@ -285,16 +261,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🎯 Roadmap
 
-### Future Features
-- Node-based story graph editor
-- Lip-sync and waveform alignment
-- Cloud saves and encryption
-- AI writing assistant integration
-- Visual scripting for events
-- Advanced animation system
-- Character emotion system
-- Background music management
-- Voice acting tools
+### Planned Features
+- Enhanced editor with visual node graph
+- More transition effects
+- Advanced audio synchronization
+- Mobile-optimized UI
+- Cloud save integration
+- Advanced localization tools
 
 ## 🆚 Comparison with Ren'Py
 
@@ -305,7 +278,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 | Mobile Performance | Poor | Optimized |
 | 3D Integration | Limited | Full Node System |
 | Rollback | Non-deterministic | Frame-accurate |
-| Localization | Clunky | CSV/JSON Pipeline |
+| Localization | Basic | JSON Pipeline |
 | Testing | Manual | Automated Tests |
 | UI Performance | CPU-bound | GPU-accelerated |
 | Extensibility | Limited | Plugin API |
@@ -316,4 +289,4 @@ For questions, bug reports, or feature requests, please open an issue on the pro
 
 ---
 
-**GN_VN** - Bringing Visual Novels to Godot with modern features and seamless integration.
+**GN_VN** - A modern Visual Novel Engine for Godot with core features and seamless integration.

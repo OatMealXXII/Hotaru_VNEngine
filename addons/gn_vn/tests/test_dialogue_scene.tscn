@@ -1,41 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://test_dialogue_scene"]
+[gd_scene load_steps=4 format=3 uid="uid://fqvx8y5x8y5x8"]
 
-[ext_resource type="Script" path="res://addons/gn_vn/engine/vn_manager.gd" id="1_test_dialogue"]
-[ext_resource type="Script" path="res://addons/gn_vn/tests/test_dialogue_scene.gd" id="2_test_dialogue"]
-[ext_resource type="Script" path="res://addons/gn_vn/engine/ui/dialogue_box.gd" id="3_test_dialogue"]
+[ext_resource type="Script" path="res://addons/gn_vn/tests/test_dialogue_scene.gd" id="1_0x8y5"]
+[ext_resource type="Script" path="res://addons/gn_vn/engine/vn_manager.gd" id="2_0x8y5"]
+[ext_resource type="PackedScene" path="res://addons/gn_vn/engine/ui/dialogue_box.tscn" id="3_0x8y5"]
 
 [node name="TestDialogueScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("2_test_dialogue")
+script = ExtResource("1_0x8y5")
 
-[node name="VNManager" type="Node" parent="."]
-script = ExtResource("1_test_dialogue")
+[node name="VNManager" type="Node"]
+script = ExtResource("2_0x8y5")
 
-[node name="DialogueBox" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+[node name="DialogueBox" parent="." instance=ExtResource("3_0x8y5")]
+
+[node name="ChoiceBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -200.0
-script = ExtResource("3_test_dialogue")
 
-[node name="ChoiceBox" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -100.0
-offset_right = 200.0
-offset_bottom = 100.0
-
-[node name="TestResults" type="RichTextLabel" parent="."]
+[node name="TestResults" type="RichTextLabel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,3 +32,4 @@ offset_top = 20.0
 offset_right = -20.0
 offset_bottom = -20.0
 bbcode_enabled = true
+text = "Test results will appear here..."

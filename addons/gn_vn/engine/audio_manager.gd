@@ -47,13 +47,14 @@ func setup_audio_players():
 
 func setup_mixer_groups():
 	# Set up audio bus assignments
-	voice_player.bus = "Voice"
-	music_player.bus = "Music"
-	sfx_player.bus = "SFX"
+	# Use default bus if custom buses don't exist
+	voice_player.bus = "Master"
+	music_player.bus = "Master"
+	sfx_player.bus = "Master"
 
 func play_voice(character_id: String, text: String) -> void:
-	"""Play voice for a character's text"""
-	var voice_key = character_id + "_" + text.hash()
+	##Play voice for a character's text##
+	var voice_key = character_id + "_" + str(text.hash())
 	
 	if voice_clips.has(voice_key):
 		var audio_stream = voice_clips[voice_key]
@@ -63,12 +64,12 @@ func play_voice(character_id: String, text: String) -> void:
 		voice_started.emit(audio_stream)
 
 func stop_voice() -> void:
-	"""Stop current voice playback"""
+	##Stop current voice playback##
 	if voice_player.playing:
 		voice_player.stop()
 
 func play_music(track_name: String, fade_in: float = 0.0) -> void:
-	"""Play background music"""
+	##Play background music##
 	if music_tracks.has(track_name):
 		var audio_stream = music_tracks[track_name]
 		music_player.stream = audio_stream
@@ -77,12 +78,12 @@ func play_music(track_name: String, fade_in: float = 0.0) -> void:
 		music_changed.emit(track_name)
 
 func stop_music(fade_out: float = 0.0) -> void:
-	"""Stop background music"""
+	##Stop background music##
 	if music_player.playing:
 		music_player.stop()
 
 func play_sound(sound_name: String) -> void:
-	"""Play a sound effect"""
+	##Play a sound effect##
 	if sound_effects.has(sound_name):
 		var audio_stream = sound_effects[sound_name]
 		sfx_player.stream = audio_stream
@@ -91,47 +92,47 @@ func play_sound(sound_name: String) -> void:
 		sound_played.emit(sound_name)
 
 func set_voice_volume(volume: float) -> void:
-	"""Set voice volume (0.0 to 1.0)"""
+	##Set voice volume (0.0 to 1.0)##
 	voice_volume = clamp(volume, 0.0, 1.0)
 	voice_player.volume_db = linear_to_db(voice_volume)
 
 func set_music_volume(volume: float) -> void:
-	"""Set music volume (0.0 to 1.0)"""
+	##Set music volume (0.0 to 1.0)##
 	music_volume = clamp(volume, 0.0, 1.0)
 	music_player.volume_db = linear_to_db(music_volume)
 
 func set_sfx_volume(volume: float) -> void:
-	"""Set sound effects volume (0.0 to 1.0)"""
+	##Set sound effects volume (0.0 to 1.0)##
 	sfx_volume = clamp(volume, 0.0, 1.0)
 	sfx_player.volume_db = linear_to_db(sfx_volume)
 
 func load_voice_clip(character_id: String, text: String, audio_path: String) -> void:
-	"""Load a voice clip for a character's text"""
-	var voice_key = character_id + "_" + text.hash()
+	##Load a voice clip for a character's text##
+	var voice_key = character_id + "_" + str(text.hash())
 	var audio_stream = load(audio_path)
 	if audio_stream:
 		voice_clips[voice_key] = audio_stream
 
 func load_music_track(track_name: String, audio_path: String) -> void:
-	"""Load a music track"""
+	##Load a music track##
 	var audio_stream = load(audio_path)
 	if audio_stream:
 		music_tracks[track_name] = audio_stream
 
 func load_sound_effect(sound_name: String, audio_path: String) -> void:
-	"""Load a sound effect"""
+	##Load a sound effect##
 	var audio_stream = load(audio_path)
 	if audio_stream:
 		sound_effects[sound_name] = audio_stream
 
 func _on_voice_finished():
-	"""Called when voice playback finishes"""
+	##Called when voice playback finishes##
 	voice_finished.emit()
 
 func is_voice_playing() -> bool:
-	"""Check if voice is currently playing"""
+	##Check if voice is currently playing##
 	return voice_player.playing
 
 func is_music_playing() -> bool:
-	"""Check if music is currently playing"""
+	##Check if music is currently playing##
 	return music_player.playing

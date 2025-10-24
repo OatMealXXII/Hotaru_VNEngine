@@ -5,7 +5,7 @@ extends RefCounted
 ## Supports CSV, JSON, and other common story formats
 
 static func import_from_csv(file_path: String) -> StoryResource:
-	"""Import a story from CSV format"""
+	##Import a story from CSV format##
 	var story = StoryResource.new()
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	
@@ -60,7 +60,7 @@ static func import_from_csv(file_path: String) -> StoryResource:
 	return story
 
 static func import_from_renpy(file_path: String) -> StoryResource:
-	"""Import a story from Ren'Py format (basic implementation)"""
+	##Import a story from Ren'Py format (basic implementation)##
 	var story = StoryResource.new()
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	
@@ -113,7 +113,7 @@ static func import_from_renpy(file_path: String) -> StoryResource:
 	return story
 
 static func export_to_csv(story: StoryResource, file_path: String) -> bool:
-	"""Export a story to CSV format"""
+	##Export a story to CSV format##
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if not file:
 		return false
@@ -135,7 +135,7 @@ static func export_to_csv(story: StoryResource, file_path: String) -> bool:
 	return true
 
 static func parse_csv_line(line: String) -> Array:
-	"""Parse a CSV line handling quoted fields"""
+	##Parse a CSV line handling quoted fields##
 	var result = []
 	var current_field = ""
 	var in_quotes = false
@@ -167,7 +167,7 @@ static func parse_csv_line(line: String) -> Array:
 	return result
 
 static func validate_story(story: StoryResource) -> Array:
-	"""Validate a story and return any errors"""
+	##Validate a story and return any errors##
 	var errors = []
 	var nodes = story.get_all_nodes()
 	var node_ids = []

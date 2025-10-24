@@ -21,7 +21,7 @@ func _ready():
 	load_translations()
 
 func set_language(lang_code: String) -> void:
-	"""Set the current language"""
+	##Set the current language##
 	if lang_code in available_languages:
 		current_language = lang_code
 		language_changed.emit(lang_code)
@@ -29,7 +29,7 @@ func set_language(lang_code: String) -> void:
 		push_warning("Language not available: " + lang_code)
 
 func translate(text: String) -> String:
-	"""Translate text using current language"""
+	##Translate text using current language##
 	# If text is a translation key (starts with #)
 	if text.begins_with("#"):
 		var key = text.substr(1)
@@ -39,7 +39,7 @@ func translate(text: String) -> String:
 	return text
 
 func get_translation(key: String, lang_code: String = "") -> String:
-	"""Get translation for a specific key and language"""
+	##Get translation for a specific key and language##
 	if lang_code == "":
 		lang_code = current_language
 	
@@ -56,10 +56,12 @@ func get_translation(key: String, lang_code: String = "") -> String:
 	return "[MISSING: " + key + "]"
 
 func load_translations() -> void:
-	"""Load translations from files"""
+	##Load translations from files##
 	var translation_dir = "res://addons/gn_vn/localization/"
 	
 	if not DirAccess.dir_exists_absolute(translation_dir):
+		# Create the directory if it doesn't exist
+		DirAccess.make_dir_recursive_absolute(translation_dir)
 		# Create default translations
 		create_default_translations()
 		return
@@ -78,7 +80,7 @@ func load_translations() -> void:
 		file_name = dir.get_next()
 
 func load_language_file(file_path: String, lang_code: String) -> void:
-	"""Load translations from a JSON file"""
+	##Load translations from a JSON file##
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
 		push_error("Failed to open translation file: " + file_path)
@@ -97,7 +99,7 @@ func load_language_file(file_path: String, lang_code: String) -> void:
 	available_languages.append(lang_code)
 
 func create_default_translations() -> void:
-	"""Create default English translations"""
+	##Create default English translations##
 	translations["en"] = {
 		"continue": "Continue",
 		"save": "Save",
@@ -111,7 +113,7 @@ func create_default_translations() -> void:
 	}
 
 func export_translations(lang_code: String, file_path: String) -> bool:
-	"""Export translations to a JSON file"""
+	##Export translations to a JSON file##
 	if not translations.has(lang_code):
 		return false
 	
@@ -126,7 +128,7 @@ func export_translations(lang_code: String, file_path: String) -> bool:
 	return true
 
 func import_translations(file_path: String, lang_code: String) -> bool:
-	"""Import translations from a JSON file"""
+	##Import translations from a JSON file##
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
 		return false
@@ -146,7 +148,7 @@ func import_translations(file_path: String, lang_code: String) -> bool:
 	return true
 
 func export_to_csv(file_path: String) -> bool:
-	"""Export all translations to CSV format"""
+	##Export all translations to CSV format##
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if not file:
 		return false
@@ -180,7 +182,7 @@ func export_to_csv(file_path: String) -> bool:
 	return true
 
 func import_from_csv(file_path: String) -> bool:
-	"""Import translations from CSV format"""
+	##Import translations from CSV format##
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
 		return false
@@ -222,7 +224,7 @@ func import_from_csv(file_path: String) -> bool:
 	return true
 
 func parse_csv_line(line: String) -> Array:
-	"""Parse a CSV line handling quoted fields"""
+	##Parse a CSV line handling quoted fields##
 	var result = []
 	var current_field = ""
 	var in_quotes = false
@@ -254,9 +256,9 @@ func parse_csv_line(line: String) -> Array:
 	return result
 
 func get_available_languages() -> Array:
-	"""Get list of available languages"""
+	##Get list of available languages##
 	return available_languages.duplicate()
 
 func get_current_language() -> String:
-	"""Get current language code"""
+	##Get current language code##
 	return current_language

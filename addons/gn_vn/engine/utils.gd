@@ -12,7 +12,7 @@ const ITALIC_PATTERN = "\\*([^\\*]+)\\*"
 
 # File system utilities
 static func ensure_directory_exists(path: String) -> bool:
-	"""Ensure a directory exists, creating it if necessary"""
+	##Ensure a directory exists, creating it if necessary##
 	if DirAccess.dir_exists_absolute(path):
 		return true
 	
@@ -23,7 +23,7 @@ static func ensure_directory_exists(path: String) -> bool:
 	return false
 
 static func get_safe_filename(filename: String) -> String:
-	"""Convert a string to a safe filename"""
+	##Convert a string to a safe filename##
 	var safe_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 	var result = ""
 	
@@ -37,7 +37,7 @@ static func get_safe_filename(filename: String) -> String:
 
 # Text processing utilities
 static func process_text_formatting(text: String) -> String:
-	"""Process all text formatting in a string"""
+	##Process all text formatting in a string##
 	text = process_ruby_text(text)
 	text = process_color_formatting(text)
 	text = process_bold_formatting(text)
@@ -45,32 +45,32 @@ static func process_text_formatting(text: String) -> String:
 	return text
 
 static func process_ruby_text(text: String) -> String:
-	"""Process ruby/furigana annotations"""
+	##Process ruby/furigana annotations##
 	var regex = RegEx.new()
 	regex.compile(RUBY_PATTERN)
 	return regex.sub(text, "[font_size=12]$1[/font_size][font_size=8]$2[/font_size]")
 
 static func process_color_formatting(text: String) -> String:
-	"""Process color formatting"""
+	##Process color formatting##
 	var regex = RegEx.new()
 	regex.compile(COLOR_PATTERN)
 	return regex.sub(text, "[color=$1]$2[/color]")
 
 static func process_bold_formatting(text: String) -> String:
-	"""Process bold formatting"""
+	##Process bold formatting##
 	var regex = RegEx.new()
 	regex.compile(BOLD_PATTERN)
 	return regex.sub(text, "[b]$1[/b]")
 
 static func process_italic_formatting(text: String) -> String:
-	"""Process italic formatting"""
+	##Process italic formatting##
 	var regex = RegEx.new()
 	regex.compile(ITALIC_PATTERN)
 	return regex.sub(text, "[i]$1[/i]")
 
 # Math utilities
 static func lerp_color(a: Color, b: Color, t: float) -> Color:
-	"""Linear interpolation between two colors"""
+	##Linear interpolation between two colors##
 	return Color(
 		lerpf(a.r, b.r, t),
 		lerpf(a.g, b.g, t),
@@ -79,7 +79,7 @@ static func lerp_color(a: Color, b: Color, t: float) -> Color:
 	)
 
 static func clamp_vector2(value: Vector2, min_val: Vector2, max_val: Vector2) -> Vector2:
-	"""Clamp a Vector2 between min and max values"""
+	##Clamp a Vector2 between min and max values##
 	return Vector2(
 		clampf(value.x, min_val.x, max_val.x),
 		clampf(value.y, min_val.y, max_val.y)
@@ -87,7 +87,7 @@ static func clamp_vector2(value: Vector2, min_val: Vector2, max_val: Vector2) ->
 
 # Validation utilities
 static func is_valid_node_id(node_id: String) -> bool:
-	"""Check if a node ID is valid"""
+	##Check if a node ID is valid##
 	if node_id.is_empty():
 		return false
 	
@@ -100,7 +100,7 @@ static func is_valid_node_id(node_id: String) -> bool:
 	return true
 
 static func is_valid_expression(expression: String) -> bool:
-	"""Check if an expression is valid (basic validation)"""
+	##Check if an expression is valid (basic validation)##
 	if expression.is_empty():
 		return false
 	
@@ -118,7 +118,7 @@ static func is_valid_expression(expression: String) -> bool:
 
 # Debug utilities
 static func debug_print(message: String, level: int = 0) -> void:
-	"""Print debug message with level"""
+	##Print debug message with level##
 	var prefix = ""
 	match level:
 		0: prefix = "[INFO]"
@@ -128,7 +128,7 @@ static func debug_print(message: String, level: int = 0) -> void:
 	print(prefix + " GN_VN: " + message)
 
 static func format_time(seconds: float) -> String:
-	"""Format time in seconds to HH:MM:SS format"""
+	##Format time in seconds to HH:MM:SS format##
 	var hours = int(seconds) / 3600
 	var minutes = (int(seconds) % 3600) / 60
 	var secs = int(seconds) % 60
@@ -137,14 +137,14 @@ static func format_time(seconds: float) -> String:
 
 # Resource utilities
 static func load_resource_safe(path: String) -> Resource:
-	"""Safely load a resource, returning null if it fails"""
+	##Safely load a resource, returning null if it fails##
 	if not FileAccess.file_exists(path):
 		return null
 	
 	return load(path)
 
 static func save_resource_safe(resource: Resource, path: String) -> bool:
-	"""Safely save a resource, returning success status"""
+	##Safely save a resource, returning success status##
 	if not resource:
 		return false
 	

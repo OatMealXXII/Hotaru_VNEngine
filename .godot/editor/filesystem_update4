@@ -1,0 +1,11 @@
+res://addons/gn_vn/samples/demo_scene.tscn
+res://addons/gn_vn/engine/ui/dialogue_box.gd
+res://addons/gn_vn/engine/vn_manager.gd
+res://addons/gn_vn/engine/ui/vn_hud.gd
+res://addons/gn_vn/editor/story_editor_plugin.gd
+res://addons/gn_vn/plugin.gd
+res://addons/gn_vn/editor/story_editor.tscn
+res://addons/gn_vn/engine/ui/choice_box.tscn
+res://addons/gn_vn/engine/ui/dialogue_box.tscn
+res://addons/gn_vn/localization/en.json
+res://addons/gn_vn/localization/th.json

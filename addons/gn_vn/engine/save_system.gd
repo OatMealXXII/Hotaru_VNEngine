@@ -12,7 +12,7 @@ func _ready():
 	DirAccess.make_dir_recursive_absolute(SAVE_DIR)
 
 func save_to_slot(slot: int, save_data: Dictionary) -> bool:
-	"""Save data to a specific slot"""
+	##Save data to a specific slot##
 	var file_path = SAVE_DIR + "save_" + str(slot) + SAVE_EXTENSION
 	
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
@@ -27,7 +27,7 @@ func save_to_slot(slot: int, save_data: Dictionary) -> bool:
 	return true
 
 func load_from_slot(slot: int) -> Dictionary:
-	"""Load data from a specific slot"""
+	##Load data from a specific slot##
 	var file_path = SAVE_DIR + "save_" + str(slot) + SAVE_EXTENSION
 	
 	if not FileAccess.file_exists(file_path):
@@ -50,7 +50,7 @@ func load_from_slot(slot: int) -> Dictionary:
 	return json.data
 
 func get_save_info(slot: int) -> Dictionary:
-	"""Get metadata about a save slot"""
+	##Get metadata about a save slot##
 	var save_data = load_from_slot(slot)
 	if save_data.is_empty():
 		return {}
@@ -64,7 +64,7 @@ func get_save_info(slot: int) -> Dictionary:
 	}
 
 func delete_slot(slot: int) -> bool:
-	"""Delete a save slot"""
+	##Delete a save slot##
 	var file_path = SAVE_DIR + "save_" + str(slot) + SAVE_EXTENSION
 	
 	if not FileAccess.file_exists(file_path):
@@ -78,10 +78,10 @@ func delete_slot(slot: int) -> bool:
 	return false
 
 func get_all_saves() -> Array:
-	"""Get information about all save slots"""
+	##Get information about all save slots##
 	var saves = []
 	
-	for i in range(100):  # Check slots 0-99
+	for i in range(100): # Check slots 0-99
 		var save_info = get_save_info(i)
 		if not save_info.is_empty():
 			saves.append(save_info)
@@ -89,7 +89,7 @@ func get_all_saves() -> Array:
 	return saves
 
 func export_save(slot: int, export_path: String) -> bool:
-	"""Export a save to a specific path"""
+	##Export a save to a specific path##
 	var save_data = load_from_slot(slot)
 	if save_data.is_empty():
 		return false
@@ -105,7 +105,7 @@ func export_save(slot: int, export_path: String) -> bool:
 	return true
 
 func import_save(import_path: String, slot: int) -> bool:
-	"""Import a save from a specific path to a slot"""
+	##Import a save from a specific path to a slot##
 	var file = FileAccess.open(import_path, FileAccess.READ)
 	if not file:
 		return false

@@ -1,0 +1,20 @@
+{
+	"continue": "Continue",
+	"save": "Save",
+	"load": "Load",
+	"settings": "Settings",
+	"quit": "Quit",
+	"yes": "Yes",
+	"no": "No",
+	"ok": "OK",
+	"cancel": "Cancel",
+	"new_story": "New Story",
+	"load_story": "Load Story",
+	"save_story": "Save Story",
+	"import": "Import",
+	"export": "Export",
+	"preview": "Preview",
+	"story_nodes": "Story Nodes",
+	"node_editor": "Node Editor",
+	"preview_story": "Preview Story"
+}

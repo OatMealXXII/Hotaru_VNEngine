@@ -19,7 +19,7 @@ var current_story: StoryResource
 var selected_node_id: String = ""
 
 func _init():
-	name = "GN VN Story Editor"
+	name = "Hotaru Visual Novel Engine Story Editor"
 	custom_minimum_size = Vector2(400, 600)
 
 func _ready():
@@ -27,7 +27,7 @@ func _ready():
 	setup_signals()
 
 func setup_ui():
-	"""Setup the editor UI"""
+	##Setup the editor UI##
 	# Main container
 	main_vbox = VBoxContainer.new()
 	main_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -46,7 +46,7 @@ func setup_ui():
 	setup_preview_button()
 
 func setup_file_controls():
-	"""Setup file operation controls"""
+	##Setup file operation controls##
 	file_controls = HBoxContainer.new()
 	main_vbox.add_child(file_controls)
 	
@@ -76,7 +76,7 @@ func setup_file_controls():
 	file_controls.add_child(export_button)
 
 func setup_story_tree():
-	"""Setup the story node tree"""
+	##Setup the story node tree##
 	var tree_label = Label.new()
 	tree_label.text = "Story Nodes"
 	main_vbox.add_child(tree_label)
@@ -87,7 +87,7 @@ func setup_story_tree():
 	main_vbox.add_child(story_tree)
 
 func setup_node_editor():
-	"""Setup the node editor panel"""
+	##Setup the node editor panel##
 	var editor_label = Label.new()
 	editor_label.text = "Node Editor"
 	main_vbox.add_child(editor_label)
@@ -97,24 +97,24 @@ func setup_node_editor():
 	main_vbox.add_child(node_editor)
 
 func setup_preview_button():
-	"""Setup preview button"""
+	##Setup preview button##
 	preview_button = Button.new()
 	preview_button.text = "Preview Story"
 	preview_button.pressed.connect(_on_preview_story)
 	main_vbox.add_child(preview_button)
 
 func setup_signals():
-	"""Setup signal connections"""
+	##Setup signal connections##
 	# Signals are connected in setup functions
-
+	pass
 func _on_new_story():
-	"""Create a new story"""
+	##Create a new story##
 	current_story = StoryResource.new()
 	refresh_story_tree()
 	story_loaded.emit(current_story)
 
 func _on_load_story():
-	"""Load a story from file"""
+	##Load a story from file##
 	var file_dialog = EditorFileDialog.new()
 	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.add_filter("*.tres", "Godot Resource")
@@ -124,7 +124,7 @@ func _on_load_story():
 	file_dialog.popup_centered(Vector2(800, 600))
 
 func _on_save_story():
-	"""Save the current story"""
+	##Save the current story##
 	if not current_story:
 		push_warning("No story to save")
 		return
@@ -138,7 +138,7 @@ func _on_save_story():
 	file_dialog.popup_centered(Vector2(800, 600))
 
 func _on_import_story():
-	"""Import story from external format"""
+	##Import story from external format##
 	var file_dialog = EditorFileDialog.new()
 	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.add_filter("*.csv", "CSV Translation")
@@ -147,7 +147,7 @@ func _on_import_story():
 	file_dialog.popup_centered(Vector2(800, 600))
 
 func _on_export_story():
-	"""Export story to external format"""
+	##Export story to external format##
 	if not current_story:
 		push_warning("No story to export")
 		return
@@ -160,16 +160,27 @@ func _on_export_story():
 	file_dialog.popup_centered(Vector2(800, 600))
 
 func _on_preview_story():
-	"""Preview the current story"""
+	##Preview the current story##
 	if not current_story:
 		push_warning("No story to preview")
 		return
 	
-	# This would integrate with the VNManager for preview
-	push_info("Preview functionality would be implemented here")
+	# Create a preview scene
+	var preview_scene = preload("res://addons/gn_vn/samples/demo_scene.tscn")
+	var preview_instance = preview_scene.instantiate()
+	
+	# Get the main scene and add preview
+	var main_scene = EditorInterface.get_edited_scene_root()
+	if main_scene:
+		main_scene.add_child(preview_instance)
+		# Start the story
+		if preview_instance.has_method("start_demo"):
+			preview_instance.start_demo()
+	else:
+		push_warning("No main scene to preview in")
 
 func _on_story_file_selected(path: String):
-	"""Handle story file selection"""
+	##Handle story file selection##
 	if path.ends_with(".tres"):
 		current_story = load(path)
 	elif path.ends_with(".json"):
@@ -185,7 +196,7 @@ func _on_story_file_selected(path: String):
 		story_loaded.emit(current_story)
 
 func _on_story_save_selected(path: String):
-	"""Handle story save selection"""
+	##Handle story save selection##
 	if not current_story:
 		return
 	
@@ -200,17 +211,65 @@ func _on_story_save_selected(path: String):
 	story_saved.emit(current_story)
 
 func _on_import_file_selected(path: String):
-	"""Handle import file selection"""
-	# Import functionality would be implemented here
-	push_info("Import functionality would be implemented here")
+	##Handle import file selection##
+	if path.ends_with(".csv"):
+		# Import CSV translation file
+		var file = FileAccess.open(path, FileAccess.READ)
+		if file:
+			var csv_content = file.get_as_text()
+			file.close()
+			# Parse CSV and update story
+			parse_csv_translation(csv_content)
+	else:
+		push_warning("Unsupported import format")
 
 func _on_export_file_selected(path: String):
-	"""Handle export file selection"""
-	# Export functionality would be implemented here
-	push_info("Export functionality would be implemented here")
+	##Handle export file selection##
+	if not current_story:
+		push_warning("No story to export")
+		return
+	
+	if path.ends_with(".csv"):
+		# Export as CSV translation file
+		var csv_content = generate_csv_translation()
+		var file = FileAccess.open(path, FileAccess.WRITE)
+		if file:
+			file.store_string(csv_content)
+			file.close()
+			print("Story exported to: ", path)
+	else:
+		push_warning("Unsupported export format")
+
+func parse_csv_translation(csv_content: String):
+	##Parse CSV translation content##
+	# Basic CSV parsing - would need more robust implementation
+	var lines = csv_content.split("\n")
+	for line in lines:
+		if line.strip() != "":
+			var parts = line.split(",")
+			if parts.size() >= 2:
+				var key = parts[0].strip()
+				var value = parts[1].strip()
+				# Update story with translation
+				print("Translation: ", key, " -> ", value)
+
+func generate_csv_translation() -> String:
+	##Generate CSV translation content##
+	var csv_lines = []
+	csv_lines.append("key,translation")
+	
+	if current_story:
+		var nodes = current_story.get_all_nodes()
+		for node in nodes:
+			if node.get("type") == "dialogue":
+				var text = node.get("text", "")
+				if text != "":
+					csv_lines.append('"' + text + '","' + text + '"')
+	
+	return "\n".join(csv_lines)
 
 func refresh_story_tree():
-	"""Refresh the story tree display"""
+	##Refresh the story tree display##
 	story_tree.clear()
 	
 	if not current_story:
@@ -228,14 +287,14 @@ func refresh_story_tree():
 		item.set_metadata(0, node_id)
 
 func _on_node_selected():
-	"""Handle node selection in tree"""
+	##Handle node selection in tree##
 	var selected = story_tree.get_selected()
-	if selected and selected.has_metadata(0):
+	if selected and selected.get_metadata(0) != null:
 		selected_node_id = selected.get_metadata(0)
 		refresh_node_editor()
 
 func refresh_node_editor():
-	"""Refresh the node editor"""
+	##Refresh the node editor##
 	# Clear existing editor
 	for child in node_editor.get_children():
 		child.queue_free()
@@ -260,7 +319,7 @@ func refresh_node_editor():
 			create_generic_editor(node)
 
 func create_dialogue_editor(node: Dictionary):
-	"""Create editor for dialogue nodes"""
+	##Create editor for dialogue nodes##
 	var speaker_label = Label.new()
 	speaker_label.text = "Speaker:"
 	node_editor.add_child(speaker_label)
@@ -281,7 +340,7 @@ func create_dialogue_editor(node: Dictionary):
 	node_editor.add_child(text_edit)
 
 func create_choice_editor(node: Dictionary):
-	"""Create editor for choice nodes"""
+	##Create editor for choice nodes##
 	var choices_label = Label.new()
 	choices_label.text = "Choices:"
 	node_editor.add_child(choices_label)
@@ -293,7 +352,7 @@ func create_choice_editor(node: Dictionary):
 	node_editor.add_child(choices_text)
 
 func create_variable_editor(node: Dictionary):
-	"""Create editor for variable nodes"""
+	##Create editor for variable nodes##
 	var var_label = Label.new()
 	var_label.text = "Variable:"
 	node_editor.add_child(var_label)
@@ -311,7 +370,7 @@ func create_variable_editor(node: Dictionary):
 	node_editor.add_child(value_edit)
 
 func create_generic_editor(node: Dictionary):
-	"""Create generic editor for unknown node types"""
+	##Create generic editor for unknown node types##
 	var json_label = Label.new()
 	json_label.text = "Node Data:"
 	node_editor.add_child(json_label)
@@ -322,13 +381,24 @@ func create_generic_editor(node: Dictionary):
 	node_editor.add_child(json_edit)
 
 func _on_speaker_changed(text: String):
-	"""Handle speaker text change"""
+	##Handle speaker text change##
 	if current_story and selected_node_id != "":
 		var node = current_story.get_node(selected_node_id)
 		node["speaker"] = text
 
 func _on_text_changed():
-	"""Handle text change"""
+	##Handle text change##
 	if current_story and selected_node_id != "":
 		var node = current_story.get_node(selected_node_id)
-		node["text"] = text_edit.text
+		# Find the text edit in the node editor
+		var text_edit = null
+		for child in node_editor.get_children():
+			if child is TextEdit:
+				text_edit = child
+				break
+		if text_edit:
+			node["text"] = text_edit.text
+
+
+func _on_story_loaded(story_resource: StoryResource) -> void:
+	pass # Replace with function body.

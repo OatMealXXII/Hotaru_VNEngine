@@ -1,42 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqx8vqkxqkxqk"]
+[gd_scene load_steps=5 format=3 uid="uid://1m2ikb0optxx"]
 
-[ext_resource type="Script" path="res://addons/gn_vn/engine/vn_manager.gd" id="1_0xkxqk"]
-[ext_resource type="Script" path="res://addons/gn_vn/samples/demo_scene.gd" id="2_1xkxqk"]
-[ext_resource type="Script" path="res://addons/gn_vn/engine/ui/dialogue_box.gd" id="3_2xkxqk"]
+[ext_resource type="Script" uid="uid://61sxki5byjc8" path="res://addons/gn_vn/samples/demo_scene.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/gn_vn/engine/ui/dialogue_box.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://addons/gn_vn/engine/ui/choice_box.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://addons/gn_vn/engine/ui/vn_hud.tscn" id="5"]
 
 [node name="DemoScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("2_1xkxqk")
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
 
-[node name="VNManager" type="Node" parent="."]
-script = ExtResource("1_0xkxqk")
-
-[node name="DialogueBox" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -200.0
-script = ExtResource("3_2xkxqk")
-
-[node name="ChoiceBox" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -100.0
-offset_right = 200.0
-offset_bottom = 100.0
-
-[node name="VNHUD" type="Control" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="DialogueBox" parent="." instance=ExtResource("3")]
+layout_mode = 1
+
+[node name="ChoiceBox" parent="." instance=ExtResource("4")]
+layout_mode = 1
+
+[node name="VNHUD" parent="." instance=ExtResource("5")]
+layout_mode = 1

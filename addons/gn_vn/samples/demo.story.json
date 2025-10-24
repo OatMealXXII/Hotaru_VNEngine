@@ -1,23 +1,23 @@
 {
 	"meta": {
-		"title": "GN_VN Demo Story",
-		"version": "1.0.0",
-		"author": "GN_VN Team",
-		"description": "A demonstration of GN_VN capabilities"
+		"title": "Hotaru Visual Novel Engine",
+		"version": "0.2.0-alpha",
+		"author": "OatMealXXII",
+		"description": "A demonstration of Visual Novel Engine capabilities"
 	},
 	"nodes": [
 		{
 			"id": "start",
 			"type": "dialogue",
 			"speaker": "Narrator",
-			"text": "Welcome to **GN_VN**, the Visual Novel Engine for Godot!",
+			"text": "Welcome to **Hotaru Visual Novel Engine**, the Visual Novel Engine for Godot!",
 			"next": "intro"
 		},
 		{
 			"id": "intro",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "Hello! I'm Alice, your guide through this demo.",
+			"speaker": "Hotaru",
+			"text": "Hello! I'm Hotaru, your guide through this demo.",
 			"next": "choice1"
 		},
 		{
@@ -41,84 +41,84 @@
 		{
 			"id": "friendly",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "Aww, thank you! I'm excited to show you what GN_VN can do.",
+			"speaker": "Hotaru",
+			"text": "Aww, thank you! I'm excited to show you what Hotaru **Visual Novel Engine** can do.",
 			"next": "features"
 		},
 		{
 			"id": "features",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "GN_VN includes many features like **rich text formatting**, *italic text*, and {color=red}colored text{/color}!",
+			"speaker": "Hotaru",
+			"text": "**Hotaru Visual Novel Engine** includes many features like **rich text formatting**, *italic text*, and {color=red}colored text{/color}!",
 			"next": "ruby_demo"
 		},
 		{
 			"id": "ruby_demo",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "We also support [ruby=漢字]kanji[/ruby] with furigana readings!",
 			"next": "technical"
 		},
 		{
 			"id": "technical",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "GN_VN is built entirely in GDScript and integrates seamlessly with Godot's node system.",
+			"speaker": "Hotaru",
+			"text": "**Hotaru Visual Novel Engine** is built entirely in GDScript and integrates seamlessly with Godot's node system.",
 			"next": "variables"
 		},
 		{
 			"id": "variables",
 			"type": "set_variable",
 			"variable": "player_name",
-			"value": "Player",
+			"value": "OatMealXXII",
 			"next": "name_demo"
 		},
 		{
 			"id": "name_demo",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "You can use variables like $player_name in your stories!",
+			"speaker": "Hotaru",
+			"text": "You can use variables like ${player_name} in your stories!",
 			"next": "conditional"
 		},
 		{
 			"id": "conditional",
 			"type": "conditional",
-			"condition": "$player_name == Player",
+			"condition": "$player_name == OatMealXXII",
 			"true_goto": "true_branch",
 			"false_goto": "false_branch"
 		},
 		{
 			"id": "true_branch",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "The condition was true! GN_VN supports conditional branching.",
+			"speaker": "Hotaru",
+			"text": "The condition was true! **Hotaru Visual Novel Engine** supports conditional branching.",
 			"next": "save_demo"
 		},
 		{
 			"id": "false_branch",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "The condition was false! This demonstrates conditional logic.",
 			"next": "save_demo"
 		},
 		{
 			"id": "save_demo",
 			"type": "dialogue",
-			"speaker": "Alice",
-			"text": "GN_VN features deterministic saves using JSON format - no more pickle files!",
+			"speaker": "Hotaru",
+			"text": "**Hotaru Visual Novel Engine** features deterministic saves using JSON format - no more pickle files!",
 			"next": "rollback_demo"
 		},
 		{
 			"id": "rollback_demo",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "You can also rollback through the story with frame-accurate precision.",
 			"next": "localization_demo"
 		},
 		{
 			"id": "localization_demo",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "Localization is built-in with CSV/JSON import/export support.",
 			"next": "final_choice"
 		},
@@ -143,21 +143,21 @@
 		{
 			"id": "amazing",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "I'm glad you think so! GN_VN is designed to be both powerful and easy to use.",
 			"next": "end"
 		},
 		{
 			"id": "learn_more",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "Check out the README.md file for detailed documentation and examples!",
 			"next": "end"
 		},
 		{
 			"id": "try_it",
 			"type": "dialogue",
-			"speaker": "Alice",
+			"speaker": "Hotaru",
 			"text": "Perfect! Start by creating a new StoryResource and adding nodes to it.",
 			"next": "end"
 		},

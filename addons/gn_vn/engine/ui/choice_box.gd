@@ -33,7 +33,7 @@ func setup_input():
 	set_process_input(true)
 
 func apply_default_styling():
-	"""Apply default styling to the choice box"""
+	##Apply default styling to the choice box##
 	# Set background
 	var style_box = StyleBoxFlat.new()
 	style_box.bg_color = Color(0, 0, 0, 0.9)
@@ -44,7 +44,7 @@ func apply_default_styling():
 	add_theme_stylebox_override("panel", style_box)
 
 func present_choices(choices: Array) -> void:
-	"""Present choices to the player"""
+	## Present choices to the player
 	current_choices = choices
 	selected_index = 0
 	
@@ -66,7 +66,7 @@ func present_choices(choices: Array) -> void:
 		choice_buttons[0].grab_focus()
 
 func create_choice_button(index: int, choice: Dictionary) -> Button:
-	"""Create a choice button"""
+	## Create a choice button
 	var button = Button.new()
 	button.text = choice.get("text", "")
 	button.custom_minimum_size = Vector2(350, 40)
@@ -102,13 +102,13 @@ func create_choice_button(index: int, choice: Dictionary) -> Button:
 	return button
 
 func clear_choices() -> void:
-	"""Clear all choice buttons"""
+	## Clear all choice buttons
 	for button in choice_buttons:
 		button.queue_free()
 	choice_buttons.clear()
 
 func _input(event: InputEvent):
-	"""Handle input events"""
+	## Handle input events
 	if not visible:
 		return
 	
@@ -125,7 +125,7 @@ func _input(event: InputEvent):
 				pass
 
 func select_previous_choice() -> void:
-	"""Select the previous choice"""
+	## Select the previous choice
 	if choice_buttons.size() == 0:
 		return
 	
@@ -133,7 +133,7 @@ func select_previous_choice() -> void:
 	update_selection()
 
 func select_next_choice() -> void:
-	"""Select the next choice"""
+	## Select the next choice
 	if choice_buttons.size() == 0:
 		return
 	
@@ -141,7 +141,7 @@ func select_next_choice() -> void:
 	update_selection()
 
 func update_selection() -> void:
-	"""Update visual selection"""
+	## Update visual selection
 	for i in range(choice_buttons.size()):
 		var button = choice_buttons[i]
 		if i == selected_index:
@@ -150,25 +150,25 @@ func update_selection() -> void:
 			button.release_focus()
 
 func confirm_choice() -> void:
-	"""Confirm the selected choice"""
+	## Confirm the selected choice
 	if selected_index >= 0 and selected_index < choice_buttons.size():
 		choice_selected.emit(selected_index)
 
 func _on_choice_selected(index: int) -> void:
-	"""Handle choice button press"""
+	## Handle choice button press
 	choice_selected.emit(index)
 
 func hide_choices() -> void:
-	"""Hide the choice box"""
+	## Hide the choice box
 	visible = false
 	clear_choices()
 
 func get_choice_count() -> int:
-	"""Get the number of current choices"""
+	## Get the number of current choices
 	return current_choices.size()
 
 func get_choice_text(index: int) -> String:
-	"""Get the text of a specific choice"""
+	## Get the text of a specific choice
 	if index >= 0 and index < current_choices.size():
 		return current_choices[index].get("text", "")
 	return ""

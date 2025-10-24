@@ -6,9 +6,10 @@ extends Control
 
 signal text_finished()
 signal text_clicked()
+signal meta_clicked(meta)
 
-@export var text_speed: float = 50.0  # Characters per second
-@export var auto_advance_delay: float = 2.0
+@export var text_speed: float = 50.0 # Characters per second
+@export var auto_advance_delay: float = 0.0 # Disabled by default
 @export var enable_click_to_continue: bool = true
 
 # UI elements
@@ -22,34 +23,16 @@ var current_text: String = ""
 var typing_timer: float = 0.0
 
 func _ready():
-	setup_ui()
+	# Get references to existing nodes
+	name_label = $DialogueMargin/DialogueContent/CharacterName
+	text_label = $DialogueMargin/DialogueContent/DialogueText
+	continue_indicator = $DialogueMargin/DialogueContent/NextIndicator
+	
+	# Set up the style
+	apply_default_styling()
+	
+	# Connect signals
 	setup_signals()
-
-func setup_ui():
-	# Create UI elements
-	var vbox = VBoxContainer.new()
-	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(vbox)
-	
-	# Character name label
-	name_label = Label.new()
-	name_label.name = "NameLabel"
-	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	vbox.add_child(name_label)
-	
-	# Dialogue text
-	text_label = RichTextLabel.new()
-	text_label.name = "TextLabel"
-	text_label.fit_content = true
-	text_label.scroll_active = false
-	text_label.bbcode_enabled = true
-	vbox.add_child(text_label)
-	
-	# Continue indicator
-	continue_indicator = Control.new()
-	continue_indicator.name = "ContinueIndicator"
-	continue_indicator.custom_minimum_size = Vector2(20, 20)
-	vbox.add_child(continue_indicator)
 	
 	# Style the UI
 	apply_default_styling()
@@ -57,30 +40,22 @@ func setup_ui():
 func setup_signals():
 	# Connect input events
 	gui_input.connect(_on_gui_input)
-	text_label.meta_clicked.connect(_on_meta_clicked)
+	if text_label:
+		text_label.meta_clicked.connect(_on_meta_clicked)
 
 func apply_default_styling():
-	"""Apply default styling to the dialogue box"""
+	##Apply default styling to the dialogue box##
 	# Set background
 	var style_box = StyleBoxFlat.new()
 	style_box.bg_color = Color(0, 0, 0, 0.8)
-	style_box.corner_radius_top_left = 10
-	style_box.corner_radius_top_right = 10
-	style_box.corner_radius_bottom_left = 10
-	style_box.corner_radius_bottom_right = 10
+	style_box.corner_radius_top_left = 15
+	style_box.corner_radius_top_right = 15
+	style_box.corner_radius_bottom_left = 15
+	style_box.corner_radius_bottom_right = 15
 	add_theme_stylebox_override("panel", style_box)
-	
-	# Style name label
-	var name_style = Label.new().get_theme_font("font")
-	name_label.add_theme_font_size_override("font_size", 18)
-	name_label.add_theme_color_override("font_color", Color.WHITE)
-	
-	# Style text label
-	text_label.add_theme_font_size_override("normal_font_size", 16)
-	text_label.add_theme_color_override("default_color", Color.WHITE)
 
 func show_text(character_id: String, text: String, metadata: Dictionary = {}) -> void:
-	"""Display text for a character"""
+	## Display text for a character
 	# Update character name
 	if character_id != "":
 		name_label.text = character_id
@@ -95,7 +70,7 @@ func show_text(character_id: String, text: String, metadata: Dictionary = {}) ->
 	start_typing(text)
 
 func process_text_formatting(text: String, metadata: Dictionary) -> String:
-	"""Process text formatting and BBCode"""
+	## Process text formatting and BBCode
 	# Handle ruby/furigana text
 	text = process_ruby_text(text)
 	
@@ -108,7 +83,7 @@ func process_text_formatting(text: String, metadata: Dictionary) -> String:
 	return text
 
 func process_ruby_text(text: String) -> String:
-	"""Process ruby/furigana annotations"""
+	## Process ruby/furigana annotations
 	# Convert [ruby=base]reading[/ruby] to BBCode
 	var regex = RegEx.new()
 	regex.compile("\\[ruby=([^\\]]+)\\]([^\\[]+)\\[/ruby\\]")
@@ -116,7 +91,7 @@ func process_ruby_text(text: String) -> String:
 	return text
 
 func process_color_formatting(text: String) -> String:
-	"""Process color formatting"""
+	## Process color formatting
 	# Convert {color=red}text{/color} to BBCode
 	var regex = RegEx.new()
 	regex.compile("\\{color=([^\\}]+)\\}([^\\{]+)\\{/color\\}")
@@ -124,7 +99,7 @@ func process_color_formatting(text: String) -> String:
 	return text
 
 func process_bbcode(text: String) -> String:
-	"""Process BBCode formatting"""
+	## Process BBCode formatting
 	# Convert **bold** to [b]bold[/b]
 	text = text.replace("**", "[b]").replace("**", "[/b]")
 	
@@ -134,7 +109,7 @@ func process_bbcode(text: String) -> String:
 	return text
 
 func start_typing(text: String) -> void:
-	"""Start typing animation"""
+	## Start typing animation
 	current_text = text
 	is_typing = true
 	typing_timer = 0.0
@@ -157,25 +132,25 @@ func _process(delta):
 			text_label.text = current_text.substr(0, chars_to_show)
 
 func on_text_finished() -> void:
-	"""Called when text typing is finished"""
+	## Called when text typing is finished
 	continue_indicator.visible = true
 	text_finished.emit()
 	
-	# Auto-advance after delay
-	if auto_advance_delay > 0:
+	# Only auto-advance if auto advance is enabled (not manual click)
+	if not enable_click_to_continue and auto_advance_delay > 0:
 		await get_tree().create_timer(auto_advance_delay).timeout
 		if not is_typing:
 			text_clicked.emit()
 
 func skip_typing() -> void:
-	"""Skip typing animation and show full text"""
+	## Skip typing animation and show full text
 	if is_typing:
 		is_typing = false
 		text_label.text = current_text
 		on_text_finished()
 
 func _on_gui_input(event: InputEvent):
-	"""Handle input events"""
+	## Handle input events
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if is_typing:
@@ -184,20 +159,24 @@ func _on_gui_input(event: InputEvent):
 				text_clicked.emit()
 
 func _on_meta_clicked(meta):
-	"""Handle meta clicks (links, etc.)"""
+	## Handle meta clicks (links, etc.)
 	# Emit signal for external handling
 	meta_clicked.emit(meta)
 
 func set_text_speed(speed: float) -> void:
-	"""Set text typing speed"""
+	## Set text typing speed
 	text_speed = speed
 
 func set_auto_advance_delay(delay: float) -> void:
-	"""Set auto-advance delay"""
+	## Set auto-advance delay
 	auto_advance_delay = delay
 
+func set_auto_advance_enabled(enabled: bool) -> void:
+	## Enable or disable auto-advance
+	enable_click_to_continue = not enabled
+
 func clear() -> void:
-	"""Clear the dialogue box"""
+	## Clear the dialogue box
 	name_label.text = ""
 	text_label.text = ""
 	continue_indicator.visible = false

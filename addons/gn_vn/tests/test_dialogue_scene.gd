@@ -16,7 +16,7 @@ func _ready():
 	run_dialogue_tests()
 
 func run_dialogue_tests():
-	"""Run comprehensive dialogue tests"""
+	##Run comprehensive dialogue tests##
 	test_results_text = "[b]GN_VN Dialogue System Tests[/b]\n\n"
 	
 	# Test 1: Basic dialogue
@@ -35,7 +35,7 @@ func run_dialogue_tests():
 	test_results.text = test_results_text
 
 func test_basic_dialogue():
-	"""Test basic dialogue functionality"""
+	##Test basic dialogue functionality##
 	add_test_result("Test 1: Basic Dialogue")
 	
 	# Create test story
@@ -74,7 +74,7 @@ func test_basic_dialogue():
 		add_test_result("✗ Dialogue text not displayed correctly")
 
 func test_choice_system():
-	"""Test choice system functionality"""
+	##Test choice system functionality##
 	add_test_result("\nTest 2: Choice System")
 	
 	# Create choice test story
@@ -130,7 +130,7 @@ func test_choice_system():
 			add_test_result("✗ Choice " + str(i + 1) + " text incorrect")
 
 func test_text_formatting():
-	"""Test text formatting functionality"""
+	##Test text formatting functionality##
 	add_test_result("\nTest 3: Text Formatting")
 	
 	# Create formatting test story
@@ -163,7 +163,7 @@ func test_text_formatting():
 		add_test_result("✗ Italic formatting not applied")
 
 func test_variable_evaluation():
-	"""Test variable evaluation in expressions"""
+	##Test variable evaluation in expressions##
 	add_test_result("\nTest 4: Variable Evaluation")
 	
 	# Set test variables
@@ -193,6 +193,6 @@ func test_variable_evaluation():
 			add_test_result("✗ " + description + " evaluation failed")
 
 func add_test_result(text: String):
-	"""Add a test result to the output"""
+	##Add a test result to the output##
 	test_results_text += text + "\n"
 	print(text)

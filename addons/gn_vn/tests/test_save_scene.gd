@@ -13,7 +13,7 @@ func _ready():
 	run_save_tests()
 
 func run_save_tests():
-	"""Run comprehensive save/load tests"""
+	##Run comprehensive save/load tests##
 	test_results_text = "[b]GN_VN Save System Tests[/b]\n\n"
 	
 	# Test 1: Basic save/load
@@ -32,7 +32,7 @@ func run_save_tests():
 	test_results.text = test_results_text
 
 func test_basic_save_load():
-	"""Test basic save and load functionality"""
+	##Test basic save and load functionality##
 	add_test_result("Test 1: Basic Save/Load")
 	
 	# Create a simple story
@@ -82,7 +82,7 @@ func test_basic_save_load():
 		add_test_result("✗ Load failed")
 
 func test_variable_persistence():
-	"""Test that variables persist correctly"""
+	##Test that variables persist correctly##
 	add_test_result("\nTest 2: Variable Persistence")
 	
 	# Set various types of variables
@@ -124,7 +124,7 @@ func test_variable_persistence():
 			add_test_result("✗ " + description + " not persisted correctly")
 
 func test_rollback_functionality():
-	"""Test rollback functionality"""
+	##Test rollback functionality##
 	add_test_result("\nTest 3: Rollback Functionality")
 	
 	# Set initial variable
@@ -153,7 +153,7 @@ func test_rollback_functionality():
 		add_test_result("✗ Rollback failed")
 
 func test_json_format():
-	"""Test JSON save format"""
+	##Test JSON save format##
 	add_test_result("\nTest 4: JSON Format Validation")
 	
 	# Save a game
@@ -184,6 +184,6 @@ func test_json_format():
 		add_test_result("✗ Save file not found")
 
 func add_test_result(text: String):
-	"""Add a test result to the output"""
+	##Add a test result to the output##
 	test_results_text += text + "\n"
 	print(text)

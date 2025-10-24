@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvh3nw8posa7h"]
+
+[ext_resource type="Script" uid="uid://7qt107frnu4d" path="res://addons/gn_vn/editor/story_editor_plugin.gd" id="1_0x8y5"]
+
+[node name="StoryEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0x8y5")
+
+[connection signal="story_loaded" from="." to="." method="_on_story_loaded"]

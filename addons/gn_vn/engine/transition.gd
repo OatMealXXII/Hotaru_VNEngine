@@ -25,11 +25,10 @@ var transition_easing: Tween.EaseType = Tween.EASE_IN_OUT
 var transition_tween: Tween
 
 func _ready():
-	transition_tween = Tween.new()
-	add_child(transition_tween)
+	transition_tween = create_tween()
 
 func start_transition(type: TransitionType, duration: float = 1.0) -> void:
-	"""Start a transition of the specified type"""
+	##Start a transition of the specified type##
 	current_transition = type
 	transition_duration = duration
 	
@@ -56,68 +55,68 @@ func start_transition(type: TransitionType, duration: float = 1.0) -> void:
 			start_scale_out()
 
 func start_crossfade() -> void:
-	"""Start a crossfade transition"""
+	##Start a crossfade transition##
 	# This would implement crossfade logic
 	# For now, just emit finished signal after duration
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_fade_in() -> void:
-	"""Start a fade in transition"""
+	##Start a fade in transition##
 	# This would implement fade in logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_fade_out() -> void:
-	"""Start a fade out transition"""
+	##Start a fade out transition##
 	# This would implement fade out logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_slide_left() -> void:
-	"""Start a slide left transition"""
+	##Start a slide left transition##
 	# This would implement slide left logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_slide_right() -> void:
-	"""Start a slide right transition"""
+	##Start a slide right transition##
 	# This would implement slide right logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_slide_up() -> void:
-	"""Start a slide up transition"""
+	##Start a slide up transition##
 	# This would implement slide up logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_slide_down() -> void:
-	"""Start a slide down transition"""
+	##Start a slide down transition##
 	# This would implement slide down logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_scale_in() -> void:
-	"""Start a scale in transition"""
+	##Start a scale in transition##
 	# This would implement scale in logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func start_scale_out() -> void:
-	"""Start a scale out transition"""
+	##Start a scale out transition##
 	# This would implement scale out logic
 	await get_tree().create_timer(transition_duration).timeout
 	transition_finished.emit()
 
 func set_transition_duration(duration: float) -> void:
-	"""Set the default transition duration"""
+	##Set the default transition duration##
 	transition_duration = duration
 
 func set_transition_easing(easing: Tween.EaseType) -> void:
-	"""Set the default transition easing"""
+	##Set the default transition easing##
 	transition_easing = easing
 
 func is_transitioning() -> bool:
-	"""Check if a transition is currently running"""
-	return transition_tween.is_valid()
+	##Check if a transition is currently running##
+	return transition_tween.is_running()
