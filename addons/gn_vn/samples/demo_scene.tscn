@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqx8vqkxqkxqk"]
+
+[ext_resource type="Script" path="res://addons/gn_vn/engine/vn_manager.gd" id="1_0xkxqk"]
+[ext_resource type="Script" path="res://addons/gn_vn/samples/demo_scene.gd" id="2_1xkxqk"]
+[ext_resource type="Script" path="res://addons/gn_vn/engine/ui/dialogue_box.gd" id="3_2xkxqk"]
+
+[node name="DemoScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("2_1xkxqk")
+
+[node name="VNManager" type="Node" parent="."]
+script = ExtResource("1_0xkxqk")
+
+[node name="DialogueBox" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+script = ExtResource("3_2xkxqk")
+
+[node name="ChoiceBox" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+
+[node name="VNHUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0

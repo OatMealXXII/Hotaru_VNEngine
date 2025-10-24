@@ -1,0 +1,172 @@
+{
+	"meta": {
+		"title": "GN_VN Demo Story",
+		"version": "1.0.0",
+		"author": "GN_VN Team",
+		"description": "A demonstration of GN_VN capabilities"
+	},
+	"nodes": [
+		{
+			"id": "start",
+			"type": "dialogue",
+			"speaker": "Narrator",
+			"text": "Welcome to **GN_VN**, the Visual Novel Engine for Godot!",
+			"next": "intro"
+		},
+		{
+			"id": "intro",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "Hello! I'm Alice, your guide through this demo.",
+			"next": "choice1"
+		},
+		{
+			"id": "choice1",
+			"type": "choice",
+			"options": [
+				{
+					"text": "Nice to meet you!",
+					"goto": "friendly"
+				},
+				{
+					"text": "What can you show me?",
+					"goto": "features"
+				},
+				{
+					"text": "I want to see the technical stuff",
+					"goto": "technical"
+				}
+			]
+		},
+		{
+			"id": "friendly",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "Aww, thank you! I'm excited to show you what GN_VN can do.",
+			"next": "features"
+		},
+		{
+			"id": "features",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "GN_VN includes many features like **rich text formatting**, *italic text*, and {color=red}colored text{/color}!",
+			"next": "ruby_demo"
+		},
+		{
+			"id": "ruby_demo",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "We also support [ruby=漢字]kanji[/ruby] with furigana readings!",
+			"next": "technical"
+		},
+		{
+			"id": "technical",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "GN_VN is built entirely in GDScript and integrates seamlessly with Godot's node system.",
+			"next": "variables"
+		},
+		{
+			"id": "variables",
+			"type": "set_variable",
+			"variable": "player_name",
+			"value": "Player",
+			"next": "name_demo"
+		},
+		{
+			"id": "name_demo",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "You can use variables like $player_name in your stories!",
+			"next": "conditional"
+		},
+		{
+			"id": "conditional",
+			"type": "conditional",
+			"condition": "$player_name == Player",
+			"true_goto": "true_branch",
+			"false_goto": "false_branch"
+		},
+		{
+			"id": "true_branch",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "The condition was true! GN_VN supports conditional branching.",
+			"next": "save_demo"
+		},
+		{
+			"id": "false_branch",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "The condition was false! This demonstrates conditional logic.",
+			"next": "save_demo"
+		},
+		{
+			"id": "save_demo",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "GN_VN features deterministic saves using JSON format - no more pickle files!",
+			"next": "rollback_demo"
+		},
+		{
+			"id": "rollback_demo",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "You can also rollback through the story with frame-accurate precision.",
+			"next": "localization_demo"
+		},
+		{
+			"id": "localization_demo",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "Localization is built-in with CSV/JSON import/export support.",
+			"next": "final_choice"
+		},
+		{
+			"id": "final_choice",
+			"type": "choice",
+			"options": [
+				{
+					"text": "This is amazing!",
+					"goto": "amazing"
+				},
+				{
+					"text": "I want to learn more",
+					"goto": "learn_more"
+				},
+				{
+					"text": "Let me try it myself",
+					"goto": "try_it"
+				}
+			]
+		},
+		{
+			"id": "amazing",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "I'm glad you think so! GN_VN is designed to be both powerful and easy to use.",
+			"next": "end"
+		},
+		{
+			"id": "learn_more",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "Check out the README.md file for detailed documentation and examples!",
+			"next": "end"
+		},
+		{
+			"id": "try_it",
+			"type": "dialogue",
+			"speaker": "Alice",
+			"text": "Perfect! Start by creating a new StoryResource and adding nodes to it.",
+			"next": "end"
+		},
+		{
+			"id": "end",
+			"type": "dialogue",
+			"speaker": "Narrator",
+			"text": "Thank you for trying GN_VN! This demo showcases the core features of the engine.",
+			"next": ""
+		}
+	]
+}
