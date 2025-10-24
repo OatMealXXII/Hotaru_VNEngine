@@ -1,6 +1,6 @@
-# GN_VN - Visual Novel Engine for Godot 4.x
+# Hotaru - Visual Novel Engine for Godot 4.x
 
-A Visual Novel Engine plugin for Godot 4.x, written entirely in GDScript. GN_VN provides core visual novel functionality with seamless Godot integration.
+A Visual Novel Engine plugin for Godot 4.x, written entirely in GDScript. Hotaru provides core visual novel functionality with seamless Godot integration.
 
 ## 🚀 Current Features
 
@@ -208,7 +208,7 @@ Run these scenes to verify the engine is working correctly.
 
 ## 🎨 Editor Integration
 
-The GN_VN Editor Plugin provides:
+The Hotaru Editor Plugin provides:
 
 - **Story Editor Dock**: Visual interface for editing stories
 - **Node Tree**: Hierarchical view of story nodes
@@ -217,11 +217,12 @@ The GN_VN Editor Plugin provides:
 
 ### Using the Editor
 
-1. Open the "GN VN Story Editor" dock
-2. Click "New" to create a story
-3. Add nodes using the tree view
-4. Edit node properties in the node editor
-5. Save your story as JSON
+1 Open: Project > Project Settings... >> Plugins
+2. Open the **"Hotaru Visual Novel Story Editor"** dock
+3. Click "New" to create a story
+4. Add nodes using the tree view
+5. Edit node properties in the node editor
+6. Save your story as JSON
 
 ## 🔧 Configuration
 
@@ -248,7 +249,7 @@ Translation files should be placed in `res://addons/gn_vn/localization/`:
 
 ## 🤝 Contributing
 
-GN_VN is designed to be extensible. You can:
+Hotaru is designed to be extensible. You can:
 
 - Add custom node types by extending the VNManager
 - Create custom UI components by inheriting from DialogueBox/ChoiceBox
@@ -269,24 +270,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Cloud save integration
 - Advanced localization tools
 
-## 🆚 Comparison with Ren'Py
-
-| Feature | Ren'Py | GN_VN |
-|---------|--------|-------|
-| Save Format | Pickle (insecure) | JSON (portable) |
-| Editor Integration | External | Native Godot |
-| Mobile Performance | Poor | Optimized |
-| 3D Integration | Limited | Full Node System |
-| Rollback | Non-deterministic | Frame-accurate |
-| Localization | Basic | JSON Pipeline |
-| Testing | Manual | Automated Tests |
-| UI Performance | CPU-bound | GPU-accelerated |
-| Extensibility | Limited | Plugin API |
-
 ## 📞 Support
 
 For questions, bug reports, or feature requests, please open an issue on the project repository.
 
 ---
 
-**GN_VN** - A modern Visual Novel Engine for Godot with core features and seamless integration.
+**Hotaru Visual Novel Engine** - A modern Visual Novel Engine for Godot with core features and seamless integration.
